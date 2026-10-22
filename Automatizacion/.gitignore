@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+.pytest_cache/
+# Los reportes se generan solos (CI los sube como artefacto); la carpeta se conserva con .gitkeep
+reportes/*
+!reportes/.gitkeep

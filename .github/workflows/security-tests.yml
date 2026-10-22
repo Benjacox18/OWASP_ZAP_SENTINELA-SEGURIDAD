@@ -1,0 +1,127 @@
+name: Pruebas de seguridad (OWASP ZAP + Juice Shop)
+
+# Se ejecuta solo, sin intervencion manual:
+#  - en cada push y pull request a main
+#  - todos los lunes (deteccion de regresiones aunque nadie haya subido cambios)
+#  - a pedido desde la pestaña Actions (workflow_dispatch)
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * 1"   # lunes 09:00 UTC (06:00 en Argentina)
+  workflow_dispatch:
+    inputs:
+      escaneo_activo:
+        description: "Ejecutar el escaneo activo (TC-07)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zap-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # "stable" siempre trae la ultima version de ZAP. Para fijarla, cambiar por una etiqueta de version
+  # existente (verificar en https://github.com/zaproxy/zaproxy/pkgs/container/zaproxy).
+  ZAP_IMAGE: ghcr.io/zaproxy/zaproxy:stable
+  JUICE_IMAGE: bkimminich/juice-shop
+  TARGET_URL: http://localhost:3000
+  ZAP_PORT: "8080"
+  ACTIVE_MAX_MIN: "8"
+
+jobs:
+  pruebas-seguridad:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: Automatizacion
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v6
+
+      - name: Preparar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: Automatizacion/requirements.txt
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Levantar Juice Shop (sistema bajo prueba, solo en este runner)
+        run: |
+          docker run -d --name juice-shop -p 3000:3000 "$JUICE_IMAGE"
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:3000 > /dev/null && break
+            sleep 2
+          done
+          curl -sf http://localhost:3000 > /dev/null || { echo "Juice Shop no arranco"; docker logs juice-shop; exit 1; }
+          echo "Juice Shop listo"
+
+      - name: Levantar ZAP en modo daemon (sesion limpia en cada ejecucion)
+        run: |
+          ZAP_API_KEY="$(openssl rand -hex 16)"
+          echo "::add-mask::$ZAP_API_KEY"
+          echo "ZAP_API_KEY=$ZAP_API_KEY" >> "$GITHUB_ENV"
+          # --network host: ZAP ve a Juice Shop como localhost:3000, igual que en las maquinas del equipo.
+          # zap-x.sh arranca con pantalla virtual (xvfb) para que el Ajax Spider pueda usar el navegador.
+          docker run -d --name zap --network host -u zap "$ZAP_IMAGE" \
+            zap-x.sh -daemon -host 127.0.0.1 -port "$ZAP_PORT" -config api.key="$ZAP_API_KEY"
+          for i in $(seq 1 90); do
+            curl -sf "http://localhost:${ZAP_PORT}/JSON/core/view/version/?apikey=${ZAP_API_KEY}" > /dev/null && break
+            sleep 2
+          done
+          curl -sf "http://localhost:${ZAP_PORT}/JSON/core/view/version/?apikey=${ZAP_API_KEY}" \
+            || { echo "ZAP no arranco"; docker logs zap | tail -50; exit 1; }
+          echo "ZAP listo"
+
+      - name: Decidir modo de la corrida
+        run: |
+          # Escaneo activo: siempre, salvo que se lo desactive a mano al lanzar el workflow.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.escaneo_activo }}" = "false" ]; then
+            echo "RUN_ACTIVE=0" >> "$GITHUB_ENV"
+          else
+            echo "RUN_ACTIVE=1" >> "$GITHUB_ENV"
+          fi
+          # Linea base de TC-08: si ya esta versionada en Git es obligatoria; si no, esta corrida la crea.
+          if [ -f baseline/baseline_alertas.json ]; then
+            echo "REQUIRE_BASELINE=1" >> "$GITHUB_ENV"
+          else
+            echo "::notice::No hay linea base en Git: TC-08 la crea en esta corrida. Descargarla del artefacto, revisarla y subirla a baseline/."
+          fi
+
+      - name: Ejecutar la suite completa (TC-01 a TC-08)
+        run: >
+          python -m pytest -v
+          --html=reportes/reporte_pytest.html --self-contained-html
+          --junitxml=reportes/resultados.xml
+
+      - name: Mostrar el resumen en la pagina de la ejecucion
+        if: always()
+        run: |
+          if [ -f reportes/resumen.md ]; then cat reportes/resumen.md >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Guardar logs de los contenedores si algo fallo
+        if: failure()
+        run: |
+          mkdir -p reportes
+          docker logs zap > reportes/zap_contenedor.log 2>&1 || true
+          docker logs juice-shop > reportes/juice_shop_contenedor.log 2>&1 || true
+
+      - name: Subir reportes como artefacto
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reportes-zap-${{ github.run_number }}
+          path: |
+            Automatizacion/reportes/
+            Automatizacion/baseline/
+          if-no-files-found: warn
+          retention-days: 30
