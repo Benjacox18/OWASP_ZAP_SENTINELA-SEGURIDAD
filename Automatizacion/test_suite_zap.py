@@ -10,7 +10,7 @@ Los 8 casos de prueba son los del Sprint 2. El Sprint 3 agrega OPTIMIZACIONES y 
      Con KNOWN_FINDINGS=fail la suite se comporta como en el Sprint 2 (los hallazgos fallan).
   3. Puerto de ZAP configurable (ZAP_PORT) y tiempos maximos configurables para spider y Ajax Spider.
   4. Conexion HTTP reutilizada (requests.Session) con reintentos solo ante errores de conexion o timeout.
-  5. Linea base de TC-08 versionada en Git (baseline/) y calculada solo con alertas del escaneo pasivo.
+  5. Linea base de TC-08 versionada en Git (baseline/) y calculada solo con alertas del escaneo pasivo e identificadas por alertRef (independiente del idioma de ZAP).
   6. Metricas y reportes automaticos (metricas.py + conftest.py): metricas.json, resumen.md, reporte HTML y JSON de ZAP.
 
 Un test PASA si el sistema cumple el criterio de aceptacion; FALLA si no lo cumple.
@@ -119,6 +119,12 @@ def hallazgo(id_h, detalle, estricto=True):
     return pytest.mark.xfail(KNOWN_XFAIL, reason=f"{id_h} - {detalle}", raises=AssertionError, strict=estricto)
 
 
+def clave_alerta(a):
+    """Identificador de una alerta que NO depende del idioma de ZAP. Los nombres cambian segun el idioma
+    (ZAP en español: 'Aplicación Web Moderna'; en ingles: 'Modern Web Application'), pero alertRef es fijo."""
+    return a.get("alertRef") or a.get("pluginId") or a["alert"]
+
+
 def obtener_alertas():
     return zap("/JSON/core/view/alerts/", baseurl=TARGET, start="0", count="5000")["alerts"]
 
@@ -186,9 +192,9 @@ def exploracion(sesion_limpia):
     log.info("Escaneo pasivo finalizado")
     # OPTIMIZACION: foto de las alertas ANTES del escaneo activo. TC-08 compara solo estas, asi su resultado
     # no depende de cuanto dure ni de que encuentre el escaneo activo (que varia entre corridas).
-    tipos = sorted({a["alert"] for a in obtener_alertas()})
+    tipos = {clave_alerta(a): a["alert"] for a in obtener_alertas()}
     log.info("Alertas del escaneo pasivo (antes del activo): %d tipos", len(tipos))
-    return tipos
+    return dict(sorted(tipos.items()))
 
 
 @pytest.fixture(scope="session")
@@ -319,8 +325,9 @@ def test_tc07_escaneo_activo_sin_alertas_high(exploracion):
 # TC-08  Regresion contra linea base de alertas
 # ----------------------------------------------------------------------------
 def test_tc08_regresion_alertas(exploracion):
-    """No deben aparecer tipos de alerta nuevos respecto de la linea base guardada (versionada en Git)."""
-    tipos = exploracion  # tipos de alerta del escaneo pasivo (ver fixture 'exploracion')
+    """No deben aparecer tipos de alerta nuevos respecto de la linea base guardada (versionada en Git).
+    Se compara por alertRef (fijo), no por nombre (cambia con el idioma de ZAP)."""
+    tipos = exploracion  # {alertRef: nombre} del escaneo pasivo (ver fixture 'exploracion')
     metricas.datos["tipos_alerta"] = len(tipos)
     log.info("Tipos de alerta (escaneo pasivo) en esta corrida: %d", len(tipos))
     if not BASELINE.exists():
@@ -330,6 +337,9 @@ def test_tc08_regresion_alertas(exploracion):
         BASELINE.write_text(json.dumps(tipos, indent=2, ensure_ascii=False), encoding="utf-8")
         log.info("Primera corrida: linea base creada en %s (revisarla y subirla a Git)", BASELINE)
         return
-    base = set(json.loads(BASELINE.read_text(encoding="utf-8")))
-    nuevos = set(tipos) - base
-    assert not nuevos, f"Alertas nuevas respecto de la linea base: {sorted(nuevos)}"
+    datos = json.loads(BASELINE.read_text(encoding="utf-8"))
+    if isinstance(datos, list):
+        pytest.fail(f"La linea base {BASELINE} esta en el formato antiguo (lista de nombres, que dependen del idioma "
+                    "de ZAP). Borrarla y regenerarla con la suite actual.")
+    nuevos = {k: v for k, v in tipos.items() if k not in set(datos)}
+    assert not nuevos, f"Alertas nuevas respecto de la linea base: {nuevos}"

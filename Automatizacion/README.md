@@ -45,7 +45,7 @@ ZAP_API_KEY=CLAVE RUN_ACTIVE=1 python -m pytest -v
 - `metricas.json` (duración total, tiempos por fase, URLs, tipos de alerta, resultado de cada test) y `resumen.md`
 
 ## Línea base de TC-08 (`baseline/baseline_alertas.json`)
-Está versionada en Git para que la regresión compare en el CI. Contiene solo alertas del escaneo pasivo. Para actualizarla a propósito: borrarla, correr la suite, revisar el archivo generado y hacer commit.
+Está versionada en Git para que la regresión compare en el CI. Contiene solo alertas del escaneo pasivo, identificadas por `alertRef` (el nombre es informativo): así funciona igual con ZAP en español o en inglés. La referencia es la que genera el CI, porque el Ajax Spider del CI recorre más URLs que el de una PC sin navegador compatible. Para actualizarla a propósito: borrarla, correr la suite, revisar el archivo generado y hacer commit.
 
 ## Casos
 TC-01 entorno, TC-02 cobertura spider, TC-03 cabeceras (H-01), TC-04 CORS (H-02), TC-05 login inválido, TC-06 entradas maliciosas (H-03, H-04), TC-07 escaneo activo (H-05), TC-08 regresión. Detalle en los documentos de los Sprints 2 y 3.
