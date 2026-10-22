@@ -1,1 +1,11 @@
-[]
+[
+  "Content Security Policy (CSP) Header Not Set",
+  "Cross-Domain Misconfiguration",
+  "Missing Anti-clickjacking Header",
+  "Modern Web Application",
+  "Private IP Disclosure",
+  "Session ID in URL Rewrite",
+  "Session Management Response Identified",
+  "Timestamp Disclosure - Unix",
+  "X-Content-Type-Options Header Missing"
+]
