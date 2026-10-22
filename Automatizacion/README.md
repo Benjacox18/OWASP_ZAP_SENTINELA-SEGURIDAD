@@ -15,11 +15,11 @@ Se ejecuta en cada push y pull request a `main`, todos los lunes y a pedido (pes
 | Estado | Significado | ¿El CI queda? |
 |---|---|---|
 | `paso` | El sistema cumple el criterio de aceptación | Verde |
-| `hallazgo_conocido` | Falla esperada de H-01 a H-04 (Juice Shop es vulnerable a propósito) | Verde |
+| `hallazgo_conocido` | Falla esperada de H-01 a H-05 (Juice Shop es vulnerable a propósito) | Verde |
 | `fallo` / `error` | Algo nuevo o roto: regresión, entorno caído, alerta nueva en TC-08 | **Rojo** |
 | `hallazgo_corregido` | Un hallazgo conocido dejó de fallar: hay que actualizar su marca `hallazgo(...)` | **Rojo** |
 
-Con `KNOWN_FINDINGS=fail` la suite se comporta como en el Sprint 2 (los 4 hallazgos figuran como FAILED).
+Con `KNOWN_FINDINGS=fail` la suite se comporta como en el Sprint 2 (los hallazgos figuran como FAILED).
 
 ## Ejecución local (Windows)
 1. Juice Shop: `docker run --rm -p 3000:3000 bkimminich/juice-shop`
@@ -45,7 +45,7 @@ ZAP_API_KEY=CLAVE RUN_ACTIVE=1 python -m pytest -v
 - `metricas.json` (duración total, tiempos por fase, URLs, tipos de alerta, resultado de cada test) y `resumen.md`
 
 ## Línea base de TC-08 (`baseline/baseline_alertas.json`)
-Está versionada en Git para que la regresión compare en el CI. Para actualizarla a propósito: borrarla, correr la suite, revisar el archivo generado y hacer commit.
+Está versionada en Git para que la regresión compare en el CI. Contiene solo alertas del escaneo pasivo. Para actualizarla a propósito: borrarla, correr la suite, revisar el archivo generado y hacer commit.
 
 ## Casos
-TC-01 entorno, TC-02 cobertura spider, TC-03 cabeceras (H-01), TC-04 CORS (H-02), TC-05 login inválido, TC-06 entradas maliciosas (H-03, H-04), TC-07 escaneo activo, TC-08 regresión. Detalle en los documentos de los Sprints 2 y 3.
+TC-01 entorno, TC-02 cobertura spider, TC-03 cabeceras (H-01), TC-04 CORS (H-02), TC-05 login inválido, TC-06 entradas maliciosas (H-03, H-04), TC-07 escaneo activo (H-05), TC-08 regresión. Detalle en los documentos de los Sprints 2 y 3.
