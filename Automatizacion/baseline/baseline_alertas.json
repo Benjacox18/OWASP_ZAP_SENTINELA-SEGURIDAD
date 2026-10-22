@@ -1,0 +1,11 @@
+{
+  "10020-1": "Missing Anti-clickjacking Header",
+  "10021": "X-Content-Type-Options Header Missing",
+  "10038-1": "Content Security Policy (CSP) Header Not Set",
+  "10096": "Timestamp Disclosure - Unix",
+  "10098": "Cross-Domain Misconfiguration",
+  "10109": "Modern Web Application",
+  "10112": "Session Management Response Identified",
+  "2": "Private IP Disclosure",
+  "3-1": "Session ID in URL Rewrite"
+}
