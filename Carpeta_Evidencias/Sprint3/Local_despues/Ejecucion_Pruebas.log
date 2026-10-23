@@ -1,0 +1,17 @@
+2026-10-22 18:12:43 INFO Objetivo autorizado: http://localhost:3000
+2026-10-22 18:12:46 INFO Sesion nueva de ZAP creada
+2026-10-22 18:12:46 INFO ZAP version 2.17.0 / Juice Shop HTTP 200
+2026-10-22 18:13:04 INFO Spider finalizado en 18.09 s
+2026-10-22 18:13:06 INFO Escaneo pasivo finalizado
+2026-10-22 18:13:06 INFO Alertas del escaneo pasivo (antes del activo): 4 tipos
+2026-10-22 18:13:06 INFO URLs descubiertas: 88 (umbral 5)
+2026-10-22 18:13:06 INFO Content-Security-Policy = None
+2026-10-22 18:13:06 INFO X-Content-Type-Options = nosniff
+2026-10-22 18:13:06 INFO X-Frame-Options = SAMEORIGIN
+2026-10-22 18:13:06 INFO Access-Control-Allow-Origin = *
+2026-10-22 18:13:06 INFO Login invalido -> HTTP 401
+2026-10-22 18:13:06 INFO Login con "'" -> HTTP 500
+2026-10-22 18:13:06 INFO Login con "' OR 1=1--" -> HTTP 200
+2026-10-22 18:13:21 INFO Tipos de alerta (escaneo pasivo) en esta corrida: 4
+2026-10-22 18:13:22 INFO Reporte HTML de ZAP guardado en reportes\reporte_zap_20261022_181321.html
+2026-10-22 18:13:22 INFO Reporte JSON de ZAP guardado en reportes\reporte_zap_20261022_181321.json

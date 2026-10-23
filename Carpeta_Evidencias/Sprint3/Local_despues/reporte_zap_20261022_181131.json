@@ -1,0 +1,405 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.17.0",
+	"@generated": "jue, 22 oct 2026 18:11:31",
+	"created": "2026-10-22T21:11:31.649076600Z",
+	"insights":[
+		{
+			"level": "Bajo",
+			"reason": "Advertencia",
+			"site": "",
+			"key": "insight.log.warn",
+			"description": "ZAP warnings logged - see the zap.log file for details",
+			"statistic": "3"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.code.2xx",
+			"description": "Percentage of responses with status code 2xx",
+			"statistic": "91"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.code.4xx",
+			"description": "Percentage of responses with status code 4xx",
+			"statistic": "8"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.application/javascript",
+			"description": "Percentage of endpoints with content type application/javascript",
+			"statistic": "4"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.application/octet-stream",
+			"description": "Percentage of endpoints with content type application/octet-stream",
+			"statistic": "7"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.image/x-icon",
+			"description": "Percentage of endpoints with content type image/x-icon",
+			"statistic": "1"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.text/css",
+			"description": "Percentage of endpoints with content type text/css",
+			"statistic": "1"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.text/html",
+			"description": "Percentage of endpoints with content type text/html",
+			"statistic": "78"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.text/markdown",
+			"description": "Percentage of endpoints with content type text/markdown",
+			"statistic": "4"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.ctype.text/plain",
+			"description": "Percentage of endpoints with content type text/plain",
+			"statistic": "1"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "100"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "65"
+		},
+		{
+			"level": "Información",
+			"reason": "Informativo",
+			"site": "http://localhost:3000",
+			"key": "insight.response.slow",
+			"description": "Percentage of slow responses",
+			"statistic": "19"
+		}
+	],
+	"site":[ 
+		{
+			"@name": "http://localhost:3000",
+			"@host": "localhost",
+			"@port": "3000",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "10038",
+					"alertRef": "10038-1",
+					"alert": "Cabecera Content Security Policy (CSP) no configurada",
+					"name": "Cabecera Content Security Policy (CSP) no configurada",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "Medio (Alta)",
+					"desc": "<p>La Pol\u00EDtica de seguridad de contenido (CSP) es una capa adicional de seguridad que ayuda a detectar y mitigar ciertos tipos de ataques, incluidos Cross Site Scripting (XSS) y ataques de inyecci\u00F3n de datos. Estos ataques se utilizan para todo, desde el robo de datos hasta la desfiguraci\u00F3n del sitio o la distribuci\u00F3n de malware. CSP proporciona un conjunto de encabezados HTTP est\u00E1ndar que permiten a los propietarios de sitios web declarar fuentes de contenido aprobadas que los navegadores deber\u00EDan poder cargar en esa p\u00E1gina; los tipos cubiertos son JavaScript, CSS, marcos HTML, fuentes, im\u00E1genes y objetos incrustados como applets de Java, ActiveX, archivos de audio y video.</p>",
+					"instances":[ 
+						{
+							"id": "4",
+							"uri": "http://localhost:3000",
+							"nodeName": "http:\/\/localhost:3000",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "50",
+							"uri": "http://localhost:3000/ftp/coupons_2013.md.bak",
+							"nodeName": "http:\/\/localhost:3000\/ftp\/coupons_2013.md.bak",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "52",
+							"uri": "http://localhost:3000/ftp/package-lock.json.bak",
+							"nodeName": "http:\/\/localhost:3000\/ftp\/package-lock.json.bak",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "49",
+							"uri": "http://localhost:3000/ftp/package.json.bak",
+							"nodeName": "http:\/\/localhost:3000\/ftp\/package.json.bak",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "http://localhost:3000/sitemap.xml",
+							"nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaciones, balanceador de carga, etc. est\u00E9 configurado para establecer la cabecera Content-Security-Policy.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "7"
+				},
+				{
+					"pluginid": "10098",
+					"alertRef": "10098",
+					"alert": "Configuraci\u00F3n Incorrecta Cross-Domain",
+					"name": "Configuraci\u00F3n Incorrecta Cross-Domain",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "Medio (Media)",
+					"desc": "<p>La carga de datos del navegador web puede ser posible, debido a una mala configuraci\u00F3n de Cross Origin Resource Sharing (CORS) en el servidor web.</p>",
+					"instances":[ 
+						{
+							"id": "5",
+							"uri": "http://localhost:3000",
+							"nodeName": "http:\/\/localhost:3000",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+						},
+						{
+							"id": "1",
+							"uri": "http://localhost:3000/assets/public/favicon_js.ico",
+							"nodeName": "http:\/\/localhost:3000\/assets\/public\/favicon_js.ico",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+						},
+						{
+							"id": "0",
+							"uri": "http://localhost:3000/robots.txt",
+							"nodeName": "http:\/\/localhost:3000\/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+						},
+						{
+							"id": "3",
+							"uri": "http://localhost:3000/sitemap.xml",
+							"nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+						},
+						{
+							"id": "8",
+							"uri": "http://localhost:3000/styles.css",
+							"nodeName": "http:\/\/localhost:3000\/styles.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Aseg\u00FArese de que los datos confidenciales no est\u00E9n disponibles de forma no autenticada (por ejemplo, mediante listas blancas de direcciones IP).</p><p>Configure el encabezado HTTP \"Access-Control-Allow-Origin\" a un conjunto m\u00E1s restrictivo de dominios, o elimine todos los encabezados CORS por completo, para permitir que el navegador web aplique la Pol\u00EDtica del Mismo Origen (SOP) de una manera m\u00E1s restrictiva.</p>",
+					"otherinfo": "<p>La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP.</p>",
+					"reference": "<p>https://vulncat.fortify.com/en/detail?category=HTML5&subcategory=Overly%20Permissive%20CORS%20Policy</p>",
+					"cweid": "264",
+					"wascid": "14",
+					"sourceid": "7"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "Divulgaci\u00F3n de Marcas de Tiempo - Unix",
+					"name": "Divulgaci\u00F3n de Marcas de Tiempo - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Bajo (Baja)",
+					"desc": "<p>Una marca de tiempo fue revelada por la aplicaci\u00F3n/servidor web. - Unix</p>",
+					"instances":[ 
+						{
+							"id": "11",
+							"uri": "http://localhost:3000",
+							"nodeName": "http:\/\/localhost:3000",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1666666667",
+							"otherinfo": "1666666667, que se eval\u00FAa como: 2022-10-24 23:57:47."
+						},
+						{
+							"id": "13",
+							"uri": "http://localhost:3000",
+							"nodeName": "http:\/\/localhost:3000",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1839622642",
+							"otherinfo": "1839622642, que se eval\u00FAa como: 2028-04-17 19:17:22."
+						},
+						{
+							"id": "12",
+							"uri": "http://localhost:3000/sitemap.xml",
+							"nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1666666667",
+							"otherinfo": "1666666667, que se eval\u00FAa como: 2022-10-24 23:57:47."
+						},
+						{
+							"id": "14",
+							"uri": "http://localhost:3000/sitemap.xml",
+							"nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1839622642",
+							"otherinfo": "1839622642, que se eval\u00FAa como: 2028-04-17 19:17:22."
+						},
+						{
+							"id": "20",
+							"uri": "http://localhost:3000/styles.css",
+							"nodeName": "http:\/\/localhost:3000\/styles.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1528301887",
+							"otherinfo": "1528301887, que se eval\u00FAa como: 2018-06-06 13:18:07."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Confirmar que los datos encontrados de informaci\u00F3n sobre la marca de tiempo no son sensibles, ni se pueden usar en patrones explotables de divulgaci\u00F3n.</p>",
+					"otherinfo": "<p>1666666667, que se eval\u00FAa como: 2022-10-24 23:57:47.</p>",
+					"reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+					"cweid": "497",
+					"wascid": "13",
+					"sourceid": "7"
+				},
+				{
+					"pluginid": "10109",
+					"alertRef": "10109",
+					"alert": "Aplicaci\u00F3n Web Moderna",
+					"name": "Aplicaci\u00F3n Web Moderna",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informativo (Media)",
+					"desc": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Client Spider may well be more effective than the standard one.</p>",
+					"instances":[ 
+						{
+							"id": "10",
+							"uri": "http://localhost:3000",
+							"nodeName": "http:\/\/localhost:3000",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \"var(--theme-accent)\", \"text\": \"var(--theme-text)\" }\n        },\n        \"theme\": \"classic\",\n        \"position\": \"bottom-right\",\n        \"content\": { \"message\": \"This website uses fruit cookies to ensure you get the juiciest tracking experience.\", \"dismiss\": \"Me want it!\", \"link\": \"But me wait!\", \"href\": \"https://www.youtube.com/watch?v=9PnbKL3wuH4\" }\n      })});\n  </script>",
+							"otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+						},
+						{
+							"id": "82",
+							"uri": "http://localhost:3000/",
+							"nodeName": "http:\/\/localhost:3000\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \"var(--theme-accent)\", \"text\": \"var(--theme-text)\" }\n        },\n        \"theme\": \"classic\",\n        \"position\": \"bottom-right\",\n        \"content\": { \"message\": \"This website uses fruit cookies to ensure you get the juiciest tracking experience.\", \"dismiss\": \"Me want it!\", \"link\": \"But me wait!\", \"href\": \"https://www.youtube.com/watch?v=9PnbKL3wuH4\" }\n      })});\n  </script>",
+							"otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+						},
+						{
+							"id": "79",
+							"uri": "http://localhost:3000/juice-shop/node_modules/express/lib/router/index.js:328:13",
+							"nodeName": "http:\/\/localhost:3000\/juice-shop\/node_modules\/express\/lib\/router\/index.js:328:13",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \"var(--theme-accent)\", \"text\": \"var(--theme-text)\" }\n        },\n        \"theme\": \"classic\",\n        \"position\": \"bottom-right\",\n        \"content\": { \"message\": \"This website uses fruit cookies to ensure you get the juiciest tracking experience.\", \"dismiss\": \"Me want it!\", \"link\": \"But me wait!\", \"href\": \"https://www.youtube.com/watch?v=9PnbKL3wuH4\" }\n      })});\n  </script>",
+							"otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+						},
+						{
+							"id": "76",
+							"uri": "http://localhost:3000/juice-shop/node_modules/express/lib/router/layer.js:95:5",
+							"nodeName": "http:\/\/localhost:3000\/juice-shop\/node_modules\/express\/lib\/router\/layer.js:95:5",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \"var(--theme-accent)\", \"text\": \"var(--theme-text)\" }\n        },\n        \"theme\": \"classic\",\n        \"position\": \"bottom-right\",\n        \"content\": { \"message\": \"This website uses fruit cookies to ensure you get the juiciest tracking experience.\", \"dismiss\": \"Me want it!\", \"link\": \"But me wait!\", \"href\": \"https://www.youtube.com/watch?v=9PnbKL3wuH4\" }\n      })});\n  </script>",
+							"otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+						},
+						{
+							"id": "9",
+							"uri": "http://localhost:3000/sitemap.xml",
+							"nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \"var(--theme-accent)\", \"text\": \"var(--theme-text)\" }\n        },\n        \"theme\": \"classic\",\n        \"position\": \"bottom-right\",\n        \"content\": { \"message\": \"This website uses fruit cookies to ensure you get the juiciest tracking experience.\", \"dismiss\": \"Me want it!\", \"link\": \"But me wait!\", \"href\": \"https://www.youtube.com/watch?v=9PnbKL3wuH4\" }\n      })});\n  </script>",
+							"otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Se trata de una alerta informativa, por lo que no es necesario realizar ning\u00FAn cambio.</p>",
+					"otherinfo": "<p>No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna.</p>",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "7"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}

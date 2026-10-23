@@ -1,0 +1,83 @@
+{
+  "fases": {
+    "spider_s": 19.13,
+    "ajax_spider_s": 1.02,
+    "pscan_s": 0.0
+  },
+  "urls": 88,
+  "tipos_alerta": 4,
+  "alertas_high": null,
+  "version_zap": "2.17.0",
+  "pruebas": [
+    {
+      "test": "test_tc01_entorno_disponible",
+      "estado": "paso",
+      "duracion_s": 0.04
+    },
+    {
+      "test": "test_tc02_spider_cobertura",
+      "estado": "paso",
+      "duracion_s": 0.01
+    },
+    {
+      "test": "test_tc03_cabeceras_seguridad[Content-Security-Policy]",
+      "estado": "hallazgo_conocido",
+      "duracion_s": 0.0
+    },
+    {
+      "test": "test_tc03_cabeceras_seguridad[X-Content-Type-Options]",
+      "estado": "paso",
+      "duracion_s": 0.0
+    },
+    {
+      "test": "test_tc03_cabeceras_seguridad[X-Frame-Options]",
+      "estado": "paso",
+      "duracion_s": 0.0
+    },
+    {
+      "test": "test_tc04_cors_no_comodin",
+      "estado": "hallazgo_conocido",
+      "duracion_s": 0.02
+    },
+    {
+      "test": "test_tc05_login_credenciales_invalidas",
+      "estado": "paso",
+      "duracion_s": 0.05
+    },
+    {
+      "test": "test_tc06_login_entradas_maliciosas[comilla_simple]",
+      "estado": "hallazgo_conocido",
+      "duracion_s": 0.05
+    },
+    {
+      "test": "test_tc06_login_entradas_maliciosas[tautologia_sql]",
+      "estado": "hallazgo_conocido",
+      "duracion_s": 0.05
+    },
+    {
+      "test": "test_tc07_escaneo_activo_sin_alertas_high",
+      "estado": "omitido",
+      "duracion_s": 0.0
+    },
+    {
+      "test": "test_tc08_regresion_alertas",
+      "estado": "paso",
+      "duracion_s": 0.0
+    }
+  ],
+  "inicio": "2026-10-22T18:10:04",
+  "duracion_total_s": 23.9,
+  "configuracion": {
+    "RUN_ACTIVE": "0",
+    "CLEAN_SESSION": "1",
+    "KNOWN_FINDINGS": "xfail",
+    "CI": "false",
+    "commit": "local"
+  },
+  "conteo": {
+    "paso": 6,
+    "hallazgo_conocido": 4,
+    "omitido": 1
+  },
+  "exit_status": 0
+}

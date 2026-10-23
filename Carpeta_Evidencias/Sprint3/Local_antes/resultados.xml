@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="1" tests="11" time="26.493" timestamp="2026-10-22T17:32:43.746228-03:00" hostname="benja"><testcase classname="test_suite_zap" name="test_tc01_entorno_disponible" time="2.086" /><testcase classname="test_suite_zap" name="test_tc02_spider_cobertura" time="19.330" /><testcase classname="test_suite_zap" name="test_tc03_cabeceras_seguridad[Content-Security-Policy]" time="0.007"><failure message="AssertionError: Falta la cabecera Content-Security-Policy&#10;assert 'Content-Security-Policy' in {'Access-Control-Allow-Origin': '*', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'Feature-Policy': &quot;payment 'self'&quot;, 'X-Recruiting': '/#/jobs', 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=0', 'Last-Modified': 'Thu, 22 Oct 2026 20:28:32 GMT', 'ETag': 'W/&quot;24b1-1a1654d1257&quot;', 'Content-Type': 'text/html; charset=UTF-8', 'Vary': 'Accept-Encoding', 'Content-Encoding': 'gzip', 'Date': 'Thu, 22 Oct 2026 20:33:05 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5', 'Transfer-Encoding': 'chunked'}&#10; +  where {'Access-Control-Allow-Origin': '*', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'Feature-Policy': &quot;payment 'self'&quot;, 'X-Recruiting': '/#/jobs', 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=0', 'Last-Modified': 'Thu, 22 Oct 2026 20:28:32 GMT', 'ETag': 'W/&quot;24b1-1a1654d1257&quot;', 'Content-Type': 'text/html; charset=UTF-8', 'Vary': 'Accept-Encoding', 'Content-Encoding': 'gzip', 'Date': 'Thu, 22 Oct 2026 20:33:05 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5', 'Transfer-Encoding': 'chunked'} = &lt;Response [200]&gt;.headers">cabecera = 'Content-Security-Policy'
+
+    @pytest.mark.parametrize("cabecera", ["Content-Security-Policy", "X-Content-Type-Options", "X-Frame-Options"])
+    def test_tc03_cabeceras_seguridad(cabecera):
+        """La respuesta del SUT debe incluir la cabecera de seguridad."""
+        r = requests.get(TARGET, timeout=15)
+        log.info("%s = %s", cabecera, r.headers.get(cabecera))
+&gt;       assert cabecera in r.headers, f"Falta la cabecera {cabecera}"
+E       AssertionError: Falta la cabecera Content-Security-Policy
+E       assert 'Content-Security-Policy' in {'Access-Control-Allow-Origin': '*', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'Feature-Policy': "payment 'self'", 'X-Recruiting': '/#/jobs', 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=0', 'Last-Modified': 'Thu, 22 Oct 2026 20:28:32 GMT', 'ETag': 'W/"24b1-1a1654d1257"', 'Content-Type': 'text/html; charset=UTF-8', 'Vary': 'Accept-Encoding', 'Content-Encoding': 'gzip', 'Date': 'Thu, 22 Oct 2026 20:33:05 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5', 'Transfer-Encoding': 'chunked'}
+E        +  where {'Access-Control-Allow-Origin': '*', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'Feature-Policy': "payment 'self'", 'X-Recruiting': '/#/jobs', 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=0', 'Last-Modified': 'Thu, 22 Oct 2026 20:28:32 GMT', 'ETag': 'W/"24b1-1a1654d1257"', 'Content-Type': 'text/html; charset=UTF-8', 'Vary': 'Accept-Encoding', 'Content-Encoding': 'gzip', 'Date': 'Thu, 22 Oct 2026 20:33:05 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5', 'Transfer-Encoding': 'chunked'} = &lt;Response [200]&gt;.headers
+
+test_suite_zap.py:156: AssertionError</failure></testcase><testcase classname="test_suite_zap" name="test_tc03_cabeceras_seguridad[X-Content-Type-Options]" time="0.015" /><testcase classname="test_suite_zap" name="test_tc03_cabeceras_seguridad[X-Frame-Options]" time="0.006" /><testcase classname="test_suite_zap" name="test_tc04_cors_no_comodin" time="0.011"><failure message="AssertionError: CORS permite cualquier origen (*)&#10;assert '*' != '*'">def test_tc04_cors_no_comodin():
+        """Access-Control-Allow-Origin no debe ser '*' (cualquier origen)."""
+        r = requests.get(f"{TARGET}/rest/products/search", params={"q": ""}, headers={"Origin": "http://otro-origen.test"}, timeout=15)
+        acao = r.headers.get("Access-Control-Allow-Origin")
+        log.info("Access-Control-Allow-Origin = %s", acao)
+&gt;       assert acao != "*", "CORS permite cualquier origen (*)"
+E       AssertionError: CORS permite cualquier origen (*)
+E       assert '*' != '*'
+
+test_suite_zap.py:167: AssertionError</failure></testcase><testcase classname="test_suite_zap" name="test_tc05_login_credenciales_invalidas" time="0.010" /><testcase classname="test_suite_zap" name="test_tc06_login_entradas_maliciosas[']" time="0.015"><failure message="AssertionError: Respuesta inesperada HTTP 500 para &quot;'&quot;&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500]&gt;.status_code">email = "'"
+
+    @pytest.mark.parametrize("email", ["'", "' OR 1=1--"])
+    def test_tc06_login_entradas_maliciosas(email):
+        """El login debe rechazar la entrada con 4xx: ni 200 (acceso) ni 5xx (error no controlado)."""
+        r = requests.post(f"{TARGET}/rest/user/login", json={"email": email, "password": "x"}, timeout=15)
+        log.info("Login con %r -&gt; HTTP %s", email, r.status_code)
+&gt;       assert 400 &lt;= r.status_code &lt; 500, f"Respuesta inesperada HTTP {r.status_code} para {email!r}"
+E       AssertionError: Respuesta inesperada HTTP 500 para "'"
+E       assert 500 &lt; 500
+E        +  where 500 = &lt;Response [500]&gt;.status_code
+
+test_suite_zap.py:189: AssertionError</failure></testcase><testcase classname="test_suite_zap" name="test_tc06_login_entradas_maliciosas[' OR 1=1--]" time="0.013"><failure message="AssertionError: Respuesta inesperada HTTP 200 para &quot;' OR 1=1--&quot;&#10;assert 400 &lt;= 200&#10; +  where 200 = &lt;Response [200]&gt;.status_code">email = "' OR 1=1--"
+
+    @pytest.mark.parametrize("email", ["'", "' OR 1=1--"])
+    def test_tc06_login_entradas_maliciosas(email):
+        """El login debe rechazar la entrada con 4xx: ni 200 (acceso) ni 5xx (error no controlado)."""
+        r = requests.post(f"{TARGET}/rest/user/login", json={"email": email, "password": "x"}, timeout=15)
+        log.info("Login con %r -&gt; HTTP %s", email, r.status_code)
+&gt;       assert 400 &lt;= r.status_code &lt; 500, f"Respuesta inesperada HTTP {r.status_code} para {email!r}"
+E       AssertionError: Respuesta inesperada HTTP 200 para "' OR 1=1--"
+E       assert 400 &lt;= 200
+E        +  where 200 = &lt;Response [200]&gt;.status_code
+
+test_suite_zap.py:189: AssertionError</failure></testcase><testcase classname="test_suite_zap" name="test_tc07_escaneo_activo_sin_alertas_high" time="0.000"><skipped type="pytest.skip" message="Escaneo activo desactivado: ejecutar con RUN_ACTIVE=1">D:\Sprint3\ANTES\Automatizacion\test_suite_zap.py:195: Escaneo activo desactivado: ejecutar con RUN_ACTIVE=1</skipped></testcase><testcase classname="test_suite_zap" name="test_tc08_regresion_alertas" time="4.705"><failure message="AssertionError: Alertas nuevas respecto de la linea base: ['CSP: Failure to Define Directive with No Fallback']&#10;assert not {'CSP: Failure to Define Directive with No Fallback'}">exploracion = True
+
+    def test_tc08_regresion_alertas(exploracion):
+        """No deben aparecer tipos de alerta nuevos respecto de la linea base guardada."""
+        tipos = sorted({a["alert"] for a in obtener_alertas()})
+        log.info("Tipos de alerta en esta corrida: %d", len(tipos))
+        if not BASELINE.exists():
+            BASELINE.write_text(json.dumps(tipos, indent=2, ensure_ascii=False), encoding="utf-8")
+            log.info("Primera corrida: linea base creada en %s", BASELINE)
+            return
+        base = set(json.loads(BASELINE.read_text(encoding="utf-8")))
+        nuevos = set(tipos) - base
+&gt;       assert not nuevos, f"Alertas nuevas respecto de la linea base: {sorted(nuevos)}"
+E       AssertionError: Alertas nuevas respecto de la linea base: ['CSP: Failure to Define Directive with No Fallback']
+E       assert not {'CSP: Failure to Define Directive with No Fallback'}
+
+test_suite_zap.py:225: AssertionError</failure></testcase></testsuite></testsuites>
